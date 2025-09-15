@@ -10,6 +10,7 @@ A Python library for sending messages to Feishu (Lark) custom bots, supporting b
 - 📝 Log-level message support
 - ⚡ Batch and concurrent sending capabilities
 - 🎯 Type-safe with full type hints
+- 🔧 Global URL configuration for convenient quick logging
 
 ## Installation
 
@@ -22,7 +23,7 @@ pip install larkbot
 ### Synchronous Usage
 
 ```python
-from larkbot import FeishuBot, quick_log
+from larkbot import FeishuBot, set_url, quick_log, LogLevel
 
 # Configuration
 WEBHOOK_URL = "your_feishu_bot_webhook_url"
@@ -30,18 +31,22 @@ SECRET = "your_feishu_bot_secret"
 
 # Method 1: Using context manager (recommended)
 with FeishuBot(WEBHOOK_URL, SECRET) as bot:
-    result = bot.send_log_message("INFO", "System started successfully")
+    result = bot.send_log_message(LogLevel.INFO, "System started successfully")
     print(result)
 
 # Method 2: Quick send
-result = quick_log(WEBHOOK_URL, "ERROR", "An error occurred", SECRET)
+result = quick_log(LogLevel.ERROR, "An error occurred", WEBHOOK_URL, SECRET)
+
+# Method 3: Set URL globally then use quick_log (NEW!)
+set_url(WEBHOOK_URL, SECRET)
+result = quick_log(LogLevel.INFO, "No need to pass URL/secret every time!")
 ```
 
 ### Asynchronous Usage
 
 ```python
 import asyncio
-from larkbot.async_ import AsyncFeishuBot, quick_log
+from larkbot.async_ import AsyncFeishuBot, set_url, quick_log, LogLevel
 
 async def main():
     WEBHOOK_URL = "your_feishu_bot_webhook_url"
@@ -49,11 +54,15 @@ async def main():
 
     # Using async context manager
     async with AsyncFeishuBot(WEBHOOK_URL, SECRET) as bot:
-        result = await bot.send_log_message("INFO", "Async system started")
+        result = await bot.send_log_message(LogLevel.INFO, "Async system started")
         print(result)
 
     # Async quick send
-    result = await quick_log(WEBHOOK_URL, "WARN", "Warning message", SECRET)
+    result = await quick_log(LogLevel.WARN, "Warning message", WEBHOOK_URL, SECRET)
+
+    # Set URL globally then use quick_log (NEW!)
+    set_url(WEBHOOK_URL, SECRET)
+    result = await quick_log(LogLevel.INFO, "No need to pass URL/secret every time!")
 
 # Run async code
 asyncio.run(main())
@@ -84,9 +93,14 @@ bot.close()
 #### Quick Send
 
 ```python
-from larkbot import quick_log
+from larkbot import set_url, quick_log, LogLevel
 
-result = quick_log(webhook_url, level, message, secret)
+# Method 1: Pass URL and secret each time
+result = quick_log(LogLevel.INFO, "Message", webhook_url, secret)
+
+# Method 2: Set globally, then use quick_log without URL/secret
+set_url(webhook_url, secret)
+result = quick_log(LogLevel.INFO, "Message")
 ```
 
 ### Asynchronous API
@@ -112,9 +126,14 @@ await bot.aclose()
 #### Async Quick Send
 
 ```python
-from larkbot.async_ import quick_log
+from larkbot.async_ import set_url, quick_log, LogLevel
 
-result = await quick_log(webhook_url, level, message, secret)
+# Method 1: Pass URL and secret each time
+result = await quick_log(LogLevel.INFO, "Message", webhook_url, secret)
+
+# Method 2: Set globally, then use quick_log without URL/secret
+set_url(webhook_url, secret)
+result = await quick_log(LogLevel.INFO, "Message")
 ```
 
 ### Concurrent Sending Example
