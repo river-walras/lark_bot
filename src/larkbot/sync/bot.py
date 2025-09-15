@@ -81,30 +81,29 @@ class FeishuBot:
             result = response.json()
 
             if result.get("code") != 0:
-                error_msg = result.get("msg", "未知错误")
-                print(f"发送失败：{error_msg}")
-                raise MessageError(f"发送失败：{error_msg}")
+                error_msg = result.get("msg", "Unknown error")
+                print(f"Sending failed: {error_msg}")
+                raise MessageError(f"Sending failed: {error_msg}")
 
-            print("消息发送成功")
             return {"success": True, "error": None, "data": result}
 
         except httpx.HTTPStatusError as e:
-            error_msg = f"HTTP错误 {e.response.status_code}: {e.response.text}"
+            error_msg = f"HTTP request error {e.response.status_code}: {e.response.text}"
             print(error_msg)
             raise NetworkError(error_msg) from e
 
         except httpx.RequestError as e:
-            error_msg = f"网络请求错误: {str(e)}"
+            error_msg = f"Network request error: {str(e)}"
             print(error_msg)
             raise NetworkError(error_msg) from e
 
         except json.JSONDecodeError as e:
-            error_msg = f"JSON解析错误: {str(e)}"
+            error_msg = f"JSON parsing error: {str(e)}"
             print(error_msg)
             raise MessageError(error_msg) from e
 
         except Exception as e:
-            error_msg = f"发送失败: {str(e)}"
+            error_msg = f"Sending failed: {str(e)}"
             print(error_msg)
             raise MessageError(error_msg) from e
 
@@ -140,5 +139,5 @@ class FeishuBot:
             return self._send_message(msg_data)
 
         except Exception as e:
-            error_msg = f"构建日志消息失败: {str(e)}"
+            error_msg = f"Building log message failed: {str(e)}"
             raise MessageError(error_msg) from e
