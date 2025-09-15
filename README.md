@@ -14,7 +14,7 @@ A Python library for sending messages to Feishu (Lark) custom bots, supporting b
 ## Installation
 
 ```bash
-pip install larkbot-sdk
+pip install larkbot
 ```
 
 ## Quick Start
@@ -22,7 +22,7 @@ pip install larkbot-sdk
 ### Synchronous Usage
 
 ```python
-from larkbot_sdk import FeishuBot, quick_log
+from larkbot import FeishuBot, quick_log
 
 # Configuration
 WEBHOOK_URL = "your_feishu_bot_webhook_url"
@@ -41,7 +41,7 @@ result = quick_log(WEBHOOK_URL, "ERROR", "An error occurred", SECRET)
 
 ```python
 import asyncio
-from larkbot_sdk.async_ import AsyncFeishuBot, quick_log
+from larkbot.async_ import AsyncFeishuBot, quick_log
 
 async def main():
     WEBHOOK_URL = "your_feishu_bot_webhook_url"
@@ -66,7 +66,7 @@ asyncio.run(main())
 #### FeishuBot
 
 ```python
-from larkbot_sdk import FeishuBot, create_bot_from_config
+from larkbot import FeishuBot, create_bot_from_config
 
 # Direct instantiation
 bot = FeishuBot(webhook_url, secret)
@@ -84,7 +84,7 @@ bot.close()
 #### Quick Send
 
 ```python
-from larkbot_sdk import quick_log
+from larkbot import quick_log
 
 result = quick_log(webhook_url, level, message, secret)
 ```
@@ -94,7 +94,7 @@ result = quick_log(webhook_url, level, message, secret)
 #### AsyncFeishuBot
 
 ```python
-from larkbot_sdk.async_ import AsyncFeishuBot, create_bot_from_config
+from larkbot.async_ import AsyncFeishuBot, create_bot_from_config
 
 # Direct instantiation
 bot = AsyncFeishuBot(webhook_url, secret)
@@ -112,7 +112,7 @@ await bot.aclose()
 #### Async Quick Send
 
 ```python
-from larkbot_sdk.async_ import quick_log
+from larkbot.async_ import quick_log
 
 result = await quick_log(webhook_url, level, message, secret)
 ```
@@ -121,7 +121,7 @@ result = await quick_log(webhook_url, level, message, secret)
 
 ```python
 import asyncio
-from larkbot_sdk.async_ import AsyncFeishuBot
+from larkbot.async_ import AsyncFeishuBot
 
 async def batch_send():
     async with AsyncFeishuBot(webhook_url, secret) as bot:
@@ -147,7 +147,7 @@ Supports the following log levels:
 The library provides comprehensive exception types:
 
 ```python
-from larkbot_sdk import (
+from larkbot import (
     LarkBotError,          # Base exception
     WebhookError,          # Webhook related errors
     AuthenticationError,   # Authentication errors
@@ -177,7 +177,7 @@ except MessageError:
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd larkbot_sdk
+cd larkbot
 
 # Install development dependencies
 pip install -e ".[dev]"

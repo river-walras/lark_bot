@@ -1,16 +1,16 @@
 """
-演示 larkbot_sdk 包的使用方法，包括同步和异步版本
+演示 larkbot 包的使用方法，包括同步和异步版本
 """
 
 import asyncio
 import time
 
 # 同步版本导入
-from larkbot_sdk import FeishuBot, create_bot_from_config, quick_log
+from larkbot import FeishuBot, create_bot_from_config, quick_log
 
 # 异步版本导入
-from larkbot_sdk.async_ import AsyncFeishuBot
-import larkbot_sdk.async_ as async_larkbot_sdk
+from larkbot.async_ import AsyncFeishuBot
+import larkbot.async_ as async_larkbot
 
 
 def demo_sync_usage():
@@ -99,7 +99,7 @@ async def demo_async_usage():
     # 方法3: 使用异步工厂函数
     print("3. 使用异步工厂函数...")
     try:
-        bot = async_larkbot_sdk.create_bot_from_config(WEBHOOK_URL, SECRET)
+        bot = async_larkbot.create_bot_from_config(WEBHOOK_URL, SECRET)
         result = await bot.send_log_message("ERROR", "异步: 数据库连接失败")
         print(f"发送结果: {result}")
         await bot.aclose()
@@ -111,7 +111,7 @@ async def demo_async_usage():
     # 方法4: 异步快速发送
     print("4. 异步快速发送...")
     try:
-        result = await async_larkbot_sdk.quick_log(
+        result = await async_larkbot.quick_log(
             WEBHOOK_URL, "DEBUG", "这是一条异步快速发送的调试消息", SECRET
         )
         print(f"发送结果: {result}")
@@ -147,8 +147,8 @@ def main():
 
     print("\n演示完成！")
     print("\n使用说明:")
-    print("- 同步版本: from larkbot_sdk import FeishuBot, create_bot_from_config, quick_log")
-    print("- 异步版本: from larkbot_sdk.async_ import AsyncFeishuBot, create_bot_from_config, quick_log")
+    print("- 同步版本: from larkbot import FeishuBot, create_bot_from_config, quick_log")
+    print("- 异步版本: from larkbot.async_ import AsyncFeishuBot, create_bot_from_config, quick_log")
     print("- 请将示例中的 WEBHOOK_URL 和 SECRET 替换为实际的飞书机器人配置")
 
 

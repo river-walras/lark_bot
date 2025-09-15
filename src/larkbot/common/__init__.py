@@ -1,4 +1,4 @@
-"""Common utilities and types for larkbot_sdk package."""
+"""Common utilities and types for larkbot package."""
 
 from .types import ResponseResult, MessageResponse, LogLevel
 from .utils import (
