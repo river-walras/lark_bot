@@ -138,6 +138,5 @@ class FeishuBot:
             }
             return self._send_message(msg_data)
 
-        except Exception as e:
-            error_msg = f"Building log message failed: {str(e)}"
-            raise MessageError(error_msg) from e
+        except Exception:
+            pass
