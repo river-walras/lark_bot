@@ -19,6 +19,12 @@ Lark Bot - 飞书自定义机器人推送库
 """
 
 from .sync import FeishuBot, create_bot_from_config, set_url, quick_log
+from .async_ import (
+    AsyncFeishuBot,
+    create_bot_from_config as create_async_bot_from_config,
+    set_url as async_set_url,
+    quick_log as async_quick_log,
+)
 from .exceptions import (
     LarkBotError,
     WebhookError,
@@ -41,4 +47,8 @@ __all__ = [
     "AuthenticationError",
     "NetworkError",
     "MessageError",
+    "AsyncFeishuBot",
+    "create_async_bot_from_config",
+    "async_set_url",
+    "async_quick_log",
 ]
